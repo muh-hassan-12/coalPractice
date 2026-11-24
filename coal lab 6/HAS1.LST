@@ -1,0 +1,15 @@
+     1                                  [org 0x0100]
+     2                                  
+     3 00000000 B8FFFF                  mov ax, 0xffff          ; Initialize BX to 0xFFFF
+     4 00000003 BB0000                  mov bx,0
+     5                                  l1:
+     6 00000006 8B97[0000]              mov dx, [num1+bx]        ; Move the second word of num1 into DX
+     7 0000000A 81C30200                add bx, 2
+     8 0000000E 39C2                    cmp dx, ax              ; Compare AX with DX
+     9 00000010 73F4                    jnc l1                   ; Jump if carry (AX < DX) to l1
+    10                                  
+    11 00000012 B8004C                  mov ax, 0x4c00          ; Exit with code 0
+    12 00000015 CD21                    int 0x21                ; Call DOS interrupt to terminate program
+    13                                  
+    14                                  section .data           ; Define data section
+    15 00000000 FFFFFEFF                num1 dw 0xffff, 0xfffe  ; Define num1 as two 16-bit words
